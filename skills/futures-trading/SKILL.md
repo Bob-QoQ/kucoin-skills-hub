@@ -31,7 +31,7 @@ Base URL: `https://api-futures.kucoin.com`
 | `/api/v1/level2/snapshot` (GET) | Get Full OrderBook | symbol | None | No |
 | `/api/v1/level2/depth{size}` (GET) | Get Part OrderBook (20 or 100 levels) | size (path: 20 or 100), symbol | None | No |
 | `/api/v1/trade/history` (GET) | Get Trade History (last 100 trades) | symbol | None | No |
-| `/api/v1/kline/query` (GET) | Get Klines (candlestick data) | symbol, granularity | from, to | No |
+| `/api/v1/kline/query` (GET) | Get Klines (candlestick data) | symbol, granularity | from (ms), to (ms) | No |
 | `/api/v1/index/query` (GET) | Get Spot Index Price | symbol | startAt, endAt, reverse, offset, forward, maxCount | No |
 | `/api/v1/interest/query` (GET) | Get Interest Rate Index | symbol | startAt, endAt, reverse, offset, forward, maxCount | No |
 | `/api/v1/premium/query` (GET) | Get Premium Index | symbol | startAt, endAt, reverse, offset, forward, maxCount | No |
@@ -43,11 +43,13 @@ Base URL: `https://api-futures.kucoin.com`
 
 | Endpoint | Description | Required | Optional | Authentication |
 |----------|-------------|----------|----------|----------------|
+| `/api/v1/orders` (GET) | Get Order List (paginated, active or done) | None | status, symbol, side, type, startAt, endAt, currentPage, pageSize | Yes |
 | `/api/v1/stopOrders` (GET) | Get Stop Order List | None | symbol, side, type, startAt, endAt, currentPage, pageSize | Yes |
 | `/api/v1/orders/{order-id}` (GET) | Get Order By OrderId | order-id (path) | None | Yes |
 | `/api/v1/orders/byClientOid` (GET) | Get Order By ClientOid | clientOid | None | Yes |
 | `/api/v1/recentDoneOrders` (GET) | Get Recent Closed Orders (last 24h) | None | symbol | Yes |
 | `/api/v1/openOrderStatistics` (GET) | Get Open Order Value | symbol | None | Yes |
+| `/api/v1/fills` (GET) | Get Trade History (paginated, up to 3 months) | None | orderId, symbol, side, type, tradeTypes, startAt, endAt, currentPage, pageSize | Yes |
 | `/api/v1/recentFills` (GET) | Get Recent Trade History (last 24h fills) | None | symbol | Yes |
 
 ### Classic Futures -- Position Queries
@@ -74,7 +76,7 @@ Base URL: `https://api-futures.kucoin.com`
 | Endpoint | Description | Required | Optional | Authentication |
 |----------|-------------|----------|----------|----------------|
 | `/api/v1/funding-rate/{symbol}/current` (GET) | Get Current Funding Rate | symbol (path) | None | No |
-| `/api/v1/contract/funding-rates` (GET) | Get Public Funding History | symbol, from, to | None | No |
+| `/api/v1/contract/funding-rates` (GET) | Get Public Funding History | symbol, from (ms), to (ms) | None | No |
 | `/api/v1/funding-history` (GET) | Get Private Funding History | symbol | startAt, endAt, reverse, offset, forward, maxCount | Yes |
 
 ---
@@ -85,12 +87,14 @@ Base URL: `https://api-futures.kucoin.com`
 
 * **symbol**: Symbol of the contract (e.g., `XBTUSDTM`, `ETHUSDTM`). Path or query parameter depending on endpoint.
 * **clientOid**: User-defined unique order ID, max 40 characters.
-* **startAt / from**: Begin time in milliseconds.
-* **endAt / to**: End time in milliseconds.
+* **startAt / from**: Begin time in **milliseconds** (13-digit Unix timestamp).
+* **endAt / to**: End time in **milliseconds** (13-digit Unix timestamp).
 * **pageSize**: Number of records per page. Default varies by endpoint (typically 50, max 200).
 * **currentPage**: Current page number for paginated queries. Default: 1.
 * **side**: Order side filter: `buy` | `sell`
-* **type**: Order type filter: `limit` | `market`
+* **type**: Order type filter: `limit` | `market` | `limit_stop` | `market_stop` | `oco_limit` | `oco_stop`
+* **status**: Order status filter for order list: `active` | `done`. Default: `done`.
+* **tradeTypes**: Trade type filter for fill history: `trade`, `adl`, `liquidation`, `settlement` (comma-separated).
 * **currency**: Currency code filter (e.g., `USDT`, `XBT`).
 * **reverse**: Boolean. Reverse the order of results.
 * **offset**: Start offset for pagination.

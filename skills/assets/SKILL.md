@@ -73,7 +73,8 @@ Assets management on KuCoin using authenticated API endpoints. Requires API Key,
 | Endpoint | Description | Required | Optional | Authentication |
 |----------|-------------|----------|----------|----------------|
 | `GET /api/v1/base-fee` | Get Basic Fee - Spot/Margin | None | currencyType | Yes |
-| `GET /api/v1/trade-fees` | Get Actual Fee - Futures | symbols | None | Yes |
+| `GET /api/v1/trade-fees` | Get Actual Fee - Spot/Margin | symbols | None | Yes |
+| `GET /api/v1/trade-fees` | Get Actual Fee - Futures. **Note: Must use Futures base URL (`https://api-futures.kucoin.com`).** | symbols | None | Yes |
 
 ---
 
@@ -128,7 +129,7 @@ Assets management on KuCoin using authenticated API endpoints. Requires API Key,
 ### Trade Fee Parameters
 
 * **currencyType**: Currency type: `0` (crypto currency), `1` (fiat currency). Default `0`.
-* **symbols**: Trading pair symbols for futures fee query (e.g., `XBTUSDTM`).
+* **symbols**: Trading pair symbols for fee query. For Spot/Margin: e.g., `BTC-USDT,ETH-USDT` (max 10). For Futures: e.g., `XBTUSDTM` (must use Futures base URL).
 
 ---
 

@@ -22,6 +22,7 @@ Margin trading on KuCoin using authenticated API endpoints. Supports cross margi
 | `/api/v3/margin/symbols` (GET) | Get Symbols - Cross Margin (trading pair config) | None | symbol | No |
 | `/api/v1/isolated/symbols` (GET) | Get Symbols - Isolated Margin (trading pair config) | None | None | No |
 | `/api/v3/etf/info` (GET) | Get ETF Info (leveraged token info) | None | currency | No |
+| `/api/v1/mark-price/{symbol}/current` (GET) | Get Mark Price Detail (current mark price for a margin pair) | symbol (path) | None | No |
 | `/api/v1/margin/config` (GET) | Get Margin Config (cross margin config, currency list) | None | None | No |
 | `/api/v3/mark-price/all-symbols` (GET) | Get Mark Price List (current mark price for all margin pairs) | None | None | No |
 | `/api/v3/margin/collateralRatio` (GET) | Get Margin Collateral Ratio | None | currencyList | No |

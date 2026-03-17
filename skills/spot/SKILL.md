@@ -27,7 +27,7 @@ Spot trading on KuCoin using authenticated API endpoints. Requires API Key, API 
 | `/api/v1/market/orderbook/level1` (GET) | Get ticker (best bid/ask) | symbol | None | No |
 | `/api/v1/market/allTickers` (GET) | Get all tickers | None | None | No |
 | `/api/v1/market/histories` (GET) | Get trade history | symbol | None | No |
-| `/api/v1/market/candles` (GET) | Get klines | symbol, type | startAt, endAt | No |
+| `/api/v1/market/candles` (GET) | Get klines | symbol, type | startAt (sec), endAt (sec) | No |
 | `/api/v1/market/orderbook/level2_{size}` (GET) | Get part orderbook | size (path: 20, 100), symbol | None | No |
 | `/api/v3/market/orderbook/level2` (GET) | Get full orderbook | symbol | None | Yes |
 | `/api/v1/market/orderbook/callauction/level2_{size}` (GET) | Get call auction part orderbook | size (path: 20, 100), symbol | None | No |
@@ -78,8 +78,8 @@ Spot trading on KuCoin using authenticated API endpoints. Requires API Key, API 
 * **clientOid**: Client order ID, unique identifier created by the user (max 40 characters)
 * **side**: Trade direction filter: buy | sell
 * **type**: Order type filter: limit | market
-* **startAt**: Start time in milliseconds
-* **endAt**: End time in milliseconds
+* **startAt**: Start time. **Note:** For `/api/v1/market/candles`, use **seconds** (10-digit Unix timestamp). For other endpoints, use **milliseconds** (13-digit timestamp).
+* **endAt**: End time. **Note:** For `/api/v1/market/candles`, use **seconds** (10-digit Unix timestamp). For other endpoints, use **milliseconds** (13-digit timestamp).
 * **pageSize**: Number of items per page (e.g., 20, 50, 100)
 * **currentPage**: Current page number for Classic pagination
 * **lastId**: ID of last record from previous batch for cursor-based pagination
